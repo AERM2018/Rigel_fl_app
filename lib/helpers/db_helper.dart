@@ -28,8 +28,11 @@ class DbHelper{
           name VARCHAR(70) NOT NULL,
           iconName VARCHAR(50)
         );
-
-        CREATE TABLE products(
+      '''
+    );
+    await db.execute(
+      '''
+CREATE TABLE products(
           id INTEGER PRIMARY KEY,
           categoryId INTEGER NOT NULL,
           price FLOAT NOT NULL,
@@ -41,7 +44,7 @@ class DbHelper{
           vitamins FLOAT NOT NULL,
           CONSTRAINT fk_category FOREIGN KEY(categoryId) REFERENCES productCategories(id)
         );
-      '''
+    '''
     );
 
     await _createDefaultCategories(db);

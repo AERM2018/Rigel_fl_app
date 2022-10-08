@@ -1,4 +1,6 @@
+import 'package:rigel_app/helpers/db_helper.dart';
 import 'package:rigel_app/models/models.dart';
+import 'package:sqflite/sqflite.dart';
 
 class Product{
   final int? id;
@@ -56,6 +58,21 @@ class Product{
       "vitamins":vitamins,
       "images":images,
     };
+  }
+
+  static Future<List<Product>> find() async{
+    Database db = await DbHelper.instance.db;
+    var products = await db.query('products');
+    return products.isNotEmpty
+        ? products
+            .map((product) => Product.fromMap(product))
+            .toList()
+        : [];
+  }
+
+  static Future<void> insert(Product product) async{
+    Database db = await DbHelper.instance.db;
+    await db.insert('products', product.toMap());
   }
 }
 
