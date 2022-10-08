@@ -1,3 +1,5 @@
+import 'package:rigel_app/models/models.dart';
+
 class Product{
   final int? id;
   final int categoryId;
@@ -57,28 +59,3 @@ class Product{
   }
 }
 
-class ProductCategory{
-  final int? id;
-  final String name;
-  final String? iconName;
-
-  ProductCategory({
-    this.id,
-    this.iconName,
-    required this.name
-  });
-
-  factory ProductCategory.fromMap(Map<String,dynamic> json) => ProductCategory(
-    id: json["id"],
-    name: json["name"],
-    iconName: json["iconName"]
-  );
-
-  Map<String,dynamic> toMap(){
-    return {
-      "id":id,
-      "name":name,
-      "iconName":iconName,
-    };
-  }
-}
