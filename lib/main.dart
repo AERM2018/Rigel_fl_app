@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Rigel app",
-        initialRoute: "newProduct",
+        initialRoute: "home",
           routes: {
             "home":(context) => const HomeScreen(),
             "newProduct":(context) => const NewProductScreen(),

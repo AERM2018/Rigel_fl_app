@@ -24,7 +24,17 @@ class HomeScreen extends StatelessWidget {
                width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * 0.10,
               child: const ProductCategoriesSlider()
-            )
+            ),
+            Container(
+                color: Colors.green,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.45,
+                child: SizedBox()),
+                Container(
+                color: Colors.red,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.15,
+                child: SizedBox())
           ],
         ),
       ),

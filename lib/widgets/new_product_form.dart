@@ -7,13 +7,14 @@ import 'package:rigel_app/themes/app_theme.dart';
 
 class NewProductForm extends StatefulWidget {
   final List<Map<String,dynamic>> newProductFields = [
-    {"name":"Name","hint":"Type product name", "label":"Name *", "keyboardType":TextInputType.text,"validator":ValidatorHelper.notEmpty },
+    {"name":"Title","hint":"Type product title", "label":"Title *", "keyboardType":TextInputType.text,"validator":ValidatorHelper.notEmpty },
     {"name":"Description","hint":"Type product description", "label":"Description *", "keyboardType":TextInputType.text,"validator":ValidatorHelper.notEmpty},
-    {"name":"Calories","hint":"Type product calories (%)", "label":"Calories *", "keyboardType":TextInputType.number,"validator":null},
-    {"name":"Additives","hint":"Type product additives (%)", "label":"Additives *", "keyboardType":TextInputType.number,"validator":null},
-    {"name":"Vitamins","hint":"Type product vitamins (%)", "label":"Vitamins *", "keyboardType":TextInputType.number,"validator":null},
+    {"name":"Calories","hint":"Type product calories (%)", "label":"Calories *", "keyboardType":TextInputType.number,"validator":ValidatorHelper.doubleGtZero},
+    {"name":"Additives","hint":"Type product additives (%)", "label":"Additives *", "keyboardType":TextInputType.number,"validator":ValidatorHelper.doubleGtZero},
+    {"name":"Vitamins","hint":"Type product vitamins (%)", "label":"Vitamins *", "keyboardType":TextInputType.number,"validator":ValidatorHelper.doubleGtZero},
     {"name":"Price","hint":"Type product price (\$)", "label":"Price *", "keyboardType":TextInputType.number,"validator":ValidatorHelper.doubleGtZero},
   ];
+  
   NewProductForm({Key? key}) : super(key: key);
   @override
   State<NewProductForm> createState() => _NewProductFormState();
@@ -21,6 +22,7 @@ class NewProductForm extends StatefulWidget {
 
 class _NewProductFormState extends State<NewProductForm> {
   final _formKey = GlobalKey<FormState>();
+  Map<String, dynamic> newProductMap = {"categoryId": 1};
   @override
   Widget build(BuildContext context) {
   final ProductProvider productProvider = Provider.of<ProductProvider>(context);
@@ -36,7 +38,9 @@ class _NewProductFormState extends State<NewProductForm> {
                   hintText: field['hint'],
                   label: Text(field['label'])
                 ),
-                validator: (value) => field['validator'] != null ? field['validator'](value,field['name']) : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (text) => field['validator'] != null ? field['validator'](text,field['name']) : null,
+                onChanged: (text) => setState(() => newProductMap[field['name'].toString().toLowerCase()] = text),
                 keyboardType: field['keyboardType'],
               ),
             )).toList(),
@@ -52,15 +56,26 @@ class _NewProductFormState extends State<NewProductForm> {
                   )),
             ElevatedButton(onPressed: (){
               if(_formKey.currentState!.validate()){
-                print("data's valid");
-                // productProvider.addProduct(Product.fromMap({
-
-                // }));
+                productProvider.addProduct(Product.fromMap(prepareProductMap(newProductMap)));
               }
             }, child: const Text("Save")),
             const SizedBox(height: 10,)
           ],
           ),
       ));
+  }
+
+  Map<String,dynamic> prepareProductMap(Map<String,dynamic> productMap){
+    return {
+    "id": productMap["id"],
+    "categoryId": productMap["categoryId"],
+    "price": double.tryParse(productMap['price']!),
+    "ranking": int.tryParse(productMap["ranking"] ?? "0"),
+    "title": productMap["title"],
+    "description": productMap["description"],
+    "calories": double.tryParse(productMap["calories"]!),
+    "additives": double.tryParse(productMap["additives"]!),
+    "vitamins": double.tryParse(productMap["vitamins"]!),
+    };
   }
 }

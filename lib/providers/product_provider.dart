@@ -20,7 +20,7 @@ class ProductProvider with ChangeNotifier{
   }
 
   addProduct(Product product) async{
-    Product.insert(product);
+    await Product.insert(product);
     products = [...products, product];
     notifyListeners();
   }
