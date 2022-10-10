@@ -10,13 +10,10 @@ class ProductCategorySliderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.red,
-      width: 80,
-      // height: 80,
+    return SizedBox(
+      width: 70,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           IconContainer(color:(isSelected) ? Colors.amber : Colors.grey),
           const SizedBox(height: 10),
@@ -29,19 +26,31 @@ class ProductCategorySliderItem extends StatelessWidget {
 
 class IconContainer extends StatelessWidget {
   final Color color;
+  // Here would be the icon
   const IconContainer({
-    Key? key, required this.color,
+    Key? key,
+    required this.color,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      // fit: StackFit.loose,
-      alignment: AlignmentDirectional.bottomStart,
-      children: [
-      CustomPaint(painter: CirclePainter(radio: 22, offset: const Offset(12,-12), color: color)),
-      const Icon(Icons.alarm)
-    ]);
+    double circleHeight = 45;
+    return SizedBox(
+      height: circleHeight,
+      width: circleHeight,
+      child: Stack(alignment: AlignmentDirectional.center, children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+              height: circleHeight,
+              decoration: BoxDecoration(
+                  color: color, shape: BoxShape.circle)),
+        ),
+        const Icon(Icons.alarm)
+      ]),
+    );
   }
 }
 

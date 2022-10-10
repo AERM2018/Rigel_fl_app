@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel_app/widgets/new_product_form.dart';
 import 'package:rigel_app/widgets/widgets.dart';
 
 class NewProductScreen extends StatelessWidget {

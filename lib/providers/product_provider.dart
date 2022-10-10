@@ -8,11 +8,11 @@ class ProductProvider with ChangeNotifier{
 
   ProductProvider(){
     print("Products provider initialized");
-    getProducts();
   }
 
-  getProducts() async{
-    products = await Product.find();
+  getProducts({int? categoryId}) async{
+    List<Product> productsFound = await Product.find();
+    products = productsFound.where((product) => product.categoryId == categoryId).toList();
     if(products.isNotEmpty){
       productSelected = products[0];
     }

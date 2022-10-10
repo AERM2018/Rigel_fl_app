@@ -19,22 +19,12 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           children: [
             const WelcomeMessage(userName: "Angelo",),
-            Container(
-              // color: Colors.green,
-               width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.10,
-              child: const ProductCategoriesSlider()
+            const ProductCategoriesSlider(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.4,
+              child: const ProductPreview()
             ),
-            Container(
-                color: Colors.green,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.45,
-                child: SizedBox()),
-                Container(
-                color: Colors.red,
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.15,
-                child: SizedBox())
+                const ProductsDisplayer()
           ],
         ),
       ),
