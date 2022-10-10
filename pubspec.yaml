@@ -39,6 +39,7 @@ dependencies:
   path_provider: ^2.0.11
   provider: ^6.0.3
   file_picker: ^5.2.0+1
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:
@@ -78,11 +79,12 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: fonts/Roboto-Bold.ttf
+        - asset: fonts/Roboto-Light.ttf
+        - asset: fonts/Roboto-Thin.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
