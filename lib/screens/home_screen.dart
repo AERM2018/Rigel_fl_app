@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel_app/themes/app_theme.dart';
 import 'package:rigel_app/widgets/widgets.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -10,21 +11,19 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-          IconButton(onPressed: (){}, icon: const Icon(Icons.shopping_bag_outlined,color: Colors.grey,))
+          IconButton(onPressed: (){}, icon: Icon(Icons.shopping_bag_outlined,color: AppTheme.secondaryColor,))
         ],
+        title: Text("Rigel", style: AppTheme.h1boldb,),
       ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
-          children: [
-            const WelcomeMessage(userName: "Angelo",),
-            const ProductCategoriesSlider(),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.4,
-              child: const ProductPreview()
-            ),
-                const ProductsDisplayer()
+          children: const [
+             WelcomeMessage(userName: "Angelo",),
+             ProductCategoriesSlider(),
+             ProductPreview(),
+             ProductsDisplayer()
           ],
         ),
       ),

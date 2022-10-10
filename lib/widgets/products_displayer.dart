@@ -9,9 +9,6 @@ class ProductsDisplayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productsProvider = Provider.of<ProductProvider>(context);
-    ProductCategoriesProvider productCategoriesProvider = Provider.of<ProductCategoriesProvider>(context);
-    productsProvider.getProducts(categoryId: productCategoriesProvider.categorySelected.id);
     Size screenSize = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.only(top: 12),

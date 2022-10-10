@@ -12,10 +12,7 @@ class ProductProvider with ChangeNotifier{
 
   getProducts({int? categoryId}) async{
     List<Product> productsFound = await Product.find();
-    products = productsFound.where((product) => product.categoryId == categoryId).toList();
-    if(products.isNotEmpty){
-      productSelected = products[0];
-    }
+    products = productsFound.where((product) => categoryId != null ? product.categoryId == categoryId : true ).toList();
     notifyListeners();
   }
 
@@ -30,6 +27,12 @@ class ProductProvider with ChangeNotifier{
     notifyListeners();
   }
 
+selectDefaultProduct() {
+  if(products.isNotEmpty){
+    productSelected = products[0];
+  }
+    notifyListeners();
+  }
   addProductImage(String path){
     productImages = [...productImages, path.toString()];
     print(productImages);

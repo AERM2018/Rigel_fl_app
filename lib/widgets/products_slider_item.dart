@@ -2,17 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:rigel_app/models/models.dart';
+import 'package:rigel_app/themes/app_theme.dart';
 
 class ProductsSliderItem extends StatelessWidget {
   final Product product;
-  const ProductsSliderItem({Key? key, required this.product}) : super(key: key);
+  final bool isSelected;
+  const ProductsSliderItem({Key? key, required this.product, required this.isSelected}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const ProductImageContainer(color: Colors.grey, productImagePath: ""),
+        ProductImageContainer(color: isSelected ? AppTheme.primaryColor : AppTheme.disable, productImagePath: ""),
         Text(product.title)
       ],
     );
