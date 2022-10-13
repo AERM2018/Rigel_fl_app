@@ -32,9 +32,10 @@ class AppTheme{
       inputDecorationTheme: InputDecorationTheme(
          border: OutlineInputBorder( borderRadius: BorderRadius.circular(12)),
          focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: primaryColor,width: 1.5),
-          borderRadius: BorderRadius.circular(12)
+          borderSide: BorderSide(color: primaryColor,width: 2.2),
+          borderRadius: BorderRadius.circular(12),
         ),
+        labelStyle: TextStyle(color: AppTheme.secondaryColor)
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: TextButton.styleFrom(

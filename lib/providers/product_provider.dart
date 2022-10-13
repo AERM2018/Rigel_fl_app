@@ -3,7 +3,7 @@ import 'package:rigel_app/models/models.dart';
 
 class ProductProvider with ChangeNotifier{
   List<Product> products = [];
-  late Product productSelected;
+  Product? productSelected;
   List<String> productImages = [];
 
   ProductProvider(){
@@ -11,9 +11,17 @@ class ProductProvider with ChangeNotifier{
   }
 
   getProducts({int? categoryId}) async{
-    List<Product> productsFound = await Product.find();
-    products = productsFound.where((product) => categoryId != null ? product.categoryId == categoryId : true ).toList();
-    notifyListeners();
+    if(categoryId != null){
+      if(products.isNotEmpty &&categoryId != products[0].categoryId){
+        productSelected = null;
+      }
+      List<Product> productsFound = await Product.find();
+      products = productsFound.where((product) => product.categoryId == categoryId).toList();
+      if(products.isNotEmpty && productSelected == null){
+        productSelected = products[0];
+      }
+      notifyListeners();
+    }
   }
 
   addProduct(Product product) async{
@@ -27,15 +35,12 @@ class ProductProvider with ChangeNotifier{
     notifyListeners();
   }
 
-selectDefaultProduct() {
-  if(products.isNotEmpty){
-    productSelected = products[0];
-  }
+  removeDefaultProduct() {
+    productSelected = null;
     notifyListeners();
   }
   addProductImage(String path){
     productImages = [...productImages, path.toString()];
-    print(productImages);
     notifyListeners();
   }
 }

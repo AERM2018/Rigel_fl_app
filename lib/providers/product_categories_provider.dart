@@ -4,7 +4,7 @@ import 'package:rigel_app/models/models.dart';
 
 class ProductCategoriesProvider with ChangeNotifier{
   List<ProductCategory> categories = [];
-  late ProductCategory categorySelected;
+  ProductCategory? categorySelected;
 
   ProductCategoriesProvider(){
     print("Category provider initialized");

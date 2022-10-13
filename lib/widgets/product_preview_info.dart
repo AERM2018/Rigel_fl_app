@@ -11,8 +11,9 @@ class ProductPreviewInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    Product product = productProvider.productSelected;
-    return Container(
+    Product? product = productProvider.productSelected;
+    return product != null
+    ? Container(
       // color: Colors.pink,
       child: Row(
         children: [
@@ -56,6 +57,7 @@ class ProductPreviewInfo extends StatelessWidget {
           )
         ]
       ),
-    );
+    )
+    : CircularProgressIndicator(color: AppTheme.thirdColor);
   }
 }

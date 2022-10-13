@@ -12,7 +12,6 @@ class ProductCategoriesSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productCategoriesProvider = Provider.of<ProductCategoriesProvider>(context);
-    final ProductProvider productsProvider = Provider.of<ProductProvider>(context,listen: false);
     List<ProductCategory> productCategories = productCategoriesProvider.categories;
     double screenWidth = MediaQuery.of(context).size.width;
 
@@ -29,12 +28,11 @@ class ProductCategoriesSlider extends StatelessWidget {
                 itemBuilder: (BuildContext context, index) => GestureDetector(
                   onTap: () {
                     productCategoriesProvider.setCategorySelected(productCategories[index]);
-                    productsProvider.selectDefaultProduct();
                   },
                   child: ProductCategorySliderItem(
                     category: productCategories[index],
                     isSelected: (productCategories[index].id ==
-                        productCategoriesProvider.categorySelected.id),
+                        productCategoriesProvider.categorySelected?.id),
                   ),
                 ),
                 itemCount: productCategories.length,

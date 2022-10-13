@@ -13,13 +13,13 @@ class ProductPreview extends StatelessWidget {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     List<Product> products = productProvider.products;
       double circleHeight = 260;
-      return Container(
+      return (products.isNotEmpty)
+      ?
+      Container(
         margin: const EdgeInsets.symmetric( vertical: 40),
         height: circleHeight,
         width: MediaQuery.of(context).size.width,
-        child: (products.isNotEmpty) 
-        ?
-        Stack(alignment: AlignmentDirectional.center, children: [
+        child: Stack(alignment: AlignmentDirectional.center, children: [
           Positioned(
             bottom: 0,
             left: 0,
@@ -31,10 +31,9 @@ class ProductPreview extends StatelessWidget {
           ),
           const ProductPreviewInfo()
         ])
-        : Center(
-      child: Image.asset("assets/no-products-found.png"),
-    )
-      );
+        
+      )
+      : Center( child: Image.asset("assets/no-products-found.png"));
   }
 }
 
