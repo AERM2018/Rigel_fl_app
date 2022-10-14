@@ -1,37 +1,60 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rigel_app/models/models.dart';
 
-class ProductProvider with ChangeNotifier{
-  List<Product> products = [];
-  Product? productSelected;
-  List<String> productImages = [];
+class ProductProvider with ChangeNotifier {
+  List<ProductDetailed> productsDetailed = [];
+  List<ProductCategory> categories = [];
+  ProductDetailed? productSelected;
+  ProductCategory? categorySelected;
+  List<String> temporalProductImages = [];
 
-  ProductProvider(){
+  ProductProvider() {
     print("Products provider initialized");
+    getProductCategories();
+   
   }
 
-  getProducts({int? categoryId}) async{
-    if(categoryId != null){
-      if(products.isNotEmpty &&categoryId != products[0].categoryId){
+  Future<void> getProductCategories() async {
+    categories = await ProductCategory.find();
+    categorySelected = categories[0];
+    await getProducts(categoryId: categorySelected?.id);
+    notifyListeners();
+  }
+
+  setCategorySelected(ProductCategory category) async{
+    categorySelected = category;
+     await getProducts(categoryId: categorySelected?.id);
+    notifyListeners();
+  }
+
+  Future<void> getProducts({int? categoryId}) async {
+    if (categoryId != null) {
+      if (productsDetailed.isNotEmpty &&
+          categoryId != productsDetailed[0].product.categoryId) {
         productSelected = null;
       }
-      List<Product> productsFound = await Product.find();
-      products = productsFound.where((product) => product.categoryId == categoryId).toList();
-      if(products.isNotEmpty && productSelected == null){
-        productSelected = products[0];
+      List<ProductDetailed> productsDetailedFound = await ProductDetailed.findAll();
+      productsDetailed = productsDetailedFound.where(
+        (productDetailed) =>productDetailed.product.categoryId == categoryId
+      ).toList();
+      if (productsDetailed.isNotEmpty && productSelected == null) {
+        productSelected = productsDetailed[0];
       }
       notifyListeners();
     }
   }
 
-  addProduct(Product product) async{
-    await Product.insert(product);
-    products = [...products, product];
+  Future<void >addProduct(ProductDetailed productDetailed) async {
+    await productDetailed.save();
+    productsDetailed = [...productsDetailed, productDetailed];
     notifyListeners();
   }
 
-  selectProduct(Product product){
-    productSelected = product;
+  selectProduct(ProductDetailed productDetailed) async {
+    productSelected = productDetailed;
     notifyListeners();
   }
 
@@ -39,8 +62,9 @@ class ProductProvider with ChangeNotifier{
     productSelected = null;
     notifyListeners();
   }
-  addProductImage(String path){
-    productImages = [...productImages, path.toString()];
+
+  addTemporalProductImage(String path) {
+    temporalProductImages = [...temporalProductImages, path.toString()];
     notifyListeners();
   }
 }

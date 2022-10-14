@@ -32,7 +32,7 @@ class DbHelper{
     );
     await db.execute(
       '''
-CREATE TABLE products(
+        CREATE TABLE products(
           id INTEGER PRIMARY KEY,
           categoryId INTEGER NOT NULL,
           price FLOAT NOT NULL,
@@ -46,7 +46,14 @@ CREATE TABLE products(
         );
     '''
     );
-
+    await db.execute('''
+        CREATE TABLE productImages(
+          id INTEGER PRIMARY KEY,
+          productId INTEGER NOT NULL,
+          path VARCHAR(255) NOT NULL,
+          CONSTRAINT fk_product FOREIGN KEY(productId) REFERENCES products(id)
+        );
+      ''');
     await _createDefaultCategories(db);
   }
 

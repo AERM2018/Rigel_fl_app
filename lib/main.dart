@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:rigel_app/providers/product_categories_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/screens/screens.dart';
 import 'package:rigel_app/themes/app_theme.dart';
@@ -15,7 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => ProductCategoriesProvider(),lazy: false,),
         ChangeNotifierProvider(create: (context) => ProductProvider(),lazy: false,)
       ],
       child: MaterialApp(

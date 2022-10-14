@@ -13,7 +13,7 @@ class Product{
   final double calories;
   final double additives;
   final double vitamins;
-  // final List<String> images;
+  
 
   Product({
     this.id,
@@ -26,7 +26,7 @@ class Product{
     required this.calories,
     required this.additives,
     required this.vitamins,
-    // required this.images,
+    
   });
 
   factory Product.fromMap(Map<String,dynamic> json) => Product(
@@ -39,7 +39,7 @@ class Product{
     calories: json["calories"],
     additives: json["additives"],
     vitamins: json["vitamins"],
-    // images: json["images"],
+   
   );
 
 
@@ -55,7 +55,6 @@ class Product{
       "calories":calories,
       "additives":additives,
       "vitamins":vitamins,
-      // "images":images,
     };
   }
 
@@ -69,9 +68,82 @@ class Product{
         : [];
   }
 
-  static Future<void> insert(Product product) async{
+  Future<int> insert() async{
     Database db = await DbHelper.instance.db;
-    await db.insert('products', product.toMap());
+    return await db.insert('products', toMap());
   }
 }
+
+class ProductImage{
+  final int? id;
+  late int? productId;
+  final String path;
+
+  ProductImage({
+    this.id,
+    this.productId,
+    required this.path
+  });
+
+  factory ProductImage.fromMap(Map<String, dynamic> json) => ProductImage(
+        id: json["id"],
+        path: json["path"],
+        productId: json["productId"]
+      );
+
+  Map<String,dynamic> toMap(){
+    return {
+      "id":id,
+      "productId":productId,
+      "path":path
+    };
+  }
+
+  Future<void> insert() async{
+    Database db = await DbHelper.instance.db;
+    await db.insert('productImages', toMap());
+  }
+
+  static Future<List<ProductImage>> findAllByProductId(int? productId) async {
+    Database db = await DbHelper.instance.db;
+    var productImages = await db.query('productImages', where: "productId = ?", whereArgs: [productId]);
+    return productImages.isNotEmpty
+        ? productImages.map((e) => ProductImage.fromMap(e)).toList()
+        : [];
+  }
+}
+
+class ProductDetailed{
+  Product product;
+  List<ProductImage> images;
+
+  ProductDetailed({
+    required this.product,
+    required this.images
+  });
+
+
+  save()async{
+    int id = await product.insert();
+    await Future.wait(images.map((productImage) async{
+      productImage.productId = id;
+      await productImage.insert();
+    }));
+  }
+
+  static Future<List<ProductDetailed>>findAll() async{
+      print("id");
+    Database db = await DbHelper.instance.db;
+    var rawProducts = await db.query("products");
+    print("raw");
+    print(rawProducts);
+    return (rawProducts.isNotEmpty)
+    ? await Future.wait(rawProducts.map((rawProduct) async{
+      var images = await ProductImage.findAllByProductId(int.tryParse(rawProduct["id"].toString()));
+      return ProductDetailed(product: Product.fromMap(rawProduct), images: images);
+    }))
+    : [];
+  }
+}
+
 
