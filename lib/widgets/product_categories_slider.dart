@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rigel_app/models/models.dart';
-import 'package:rigel_app/providers/product_categories_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/widgets/widgets.dart';
 
@@ -11,8 +10,7 @@ class ProductCategoriesSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final productCategoriesProvider = Provider.of<ProductCategoriesProvider>(context);
-    List<ProductCategory> productCategories = productCategoriesProvider.categories;
+    final productProvider = Provider.of<ProductProvider>(context);
     double screenWidth = MediaQuery.of(context).size.width;
 
     return SizedBox(
@@ -27,15 +25,15 @@ class ProductCategoriesSlider extends StatelessWidget {
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, index) => GestureDetector(
                   onTap: () {
-                    productCategoriesProvider.setCategorySelected(productCategories[index]);
+                    productProvider.setCategorySelected(productProvider.categories[index]);
                   },
                   child: ProductCategorySliderItem(
-                    category: productCategories[index],
-                    isSelected: (productCategories[index].id ==
-                        productCategoriesProvider.categorySelected?.id),
+                    category: productProvider.categories[index],
+                    isSelected: (productProvider.categories[index].id ==
+                        productProvider.categorySelected?.id),
                   ),
                 ),
-                itemCount: productCategories.length,
+                itemCount: productProvider.categories.length,
               )
             ),
           SizedBox(

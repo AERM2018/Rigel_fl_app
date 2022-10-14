@@ -3,27 +3,27 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rigel_app/models/models.dart';
-import 'package:rigel_app/providers/product_categories_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 
 class ProductsSliderItem extends StatelessWidget {
-    final Product product;
+    final ProductDetailed productDetailed;
 
-  const ProductsSliderItem({Key? key, required this.product}) : super(key: key);
+  const ProductsSliderItem({Key? key, required this.productDetailed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    bool isSelected = product.id == productProvider.productSelected?.id;
+    // List<String> productImages = productProvider.productImages;
+    bool isSelected = productDetailed.product.id == productProvider.productSelected?.product.id;
     return GestureDetector(
-      onTap: () => productProvider.selectProduct(product),
+      onTap: () => productProvider.selectProduct(productDetailed),
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProductImageContainer(color: isSelected ? AppTheme.primaryColor : AppTheme.disable, productImagePath: ""),
-            Text(product.title)
+            ProductImageContainer(color: isSelected ? AppTheme.primaryColor : AppTheme.disable, productImagePath: productDetailed.images.isNotEmpty ? productDetailed.images[0].path : ""),
+            Text(productDetailed.product.title)
           ],
         ),
       ),

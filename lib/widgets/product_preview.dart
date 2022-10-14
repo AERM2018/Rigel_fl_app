@@ -11,7 +11,7 @@ class ProductPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    List<Product> products = productProvider.products;
+    List<ProductDetailed> products = productProvider.productsDetailed;
       double circleHeight = 260;
       return (products.isNotEmpty)
       ?

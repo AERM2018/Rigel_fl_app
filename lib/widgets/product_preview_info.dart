@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
@@ -11,15 +13,18 @@ class ProductPreviewInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    Product? product = productProvider.productSelected;
-    return product != null
-    ? Container(
+    ProductDetailed? productDetailed = productProvider.productSelected ?? productProvider.productsDetailed[0];
+    List<String> productImages = productProvider.temporalProductImages;
+    return Container(
       // color: Colors.pink,
       child: Row(
         children: [
           SizedBox(
             width: 100,
-            child: Image.asset("assets/no-products-found.png")
+            child: (productDetailed.images.isEmpty)
+            ? Image.asset("assets/no-products-found.png")
+            :  Image.file(File(productDetailed.images[0].path))
+           
           ),
           Container(
             // color: Colors.green,
@@ -30,8 +35,8 @@ class ProductPreviewInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(product.title, style: AppTheme.h2boldw),
-                Text("\$${product.price} MXN", style: AppTheme.h3w),
+                Text(productDetailed.product.title, style: AppTheme.h2boldw),
+                Text("\$${productDetailed.product.price} MXN", style: AppTheme.h3w),
                 RatingBar.builder(
                   unratedColor: Colors.white12,
                   itemSize: 15,
@@ -57,7 +62,6 @@ class ProductPreviewInfo extends StatelessWidget {
           )
         ]
       ),
-    )
-    : CircularProgressIndicator(color: AppTheme.thirdColor);
+    );
   }
 }
