@@ -14,15 +14,21 @@ class ProductsSliderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    // List<String> productImages = productProvider.productImages;
+    // List<String> productImages = productProvider.productImages;d
     bool isSelected = productDetailed.product.id == productProvider.productSelected?.product.id;
     return GestureDetector(
       onTap: () => productProvider.selectProduct(productDetailed),
+      onDoubleTap: () {
+        if( !isSelected ){
+          productProvider.selectProduct(productDetailed);
+        }
+        Navigator.pushNamed(context, "product");
+      },
       child: SizedBox(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProductImageContainer(color: isSelected ? AppTheme.primaryColor : AppTheme.disable, productImagePath: productDetailed.images.isNotEmpty ? productDetailed.images[0].path : ""),
+            ProductImageContainer(isSelected:isSelected, productImagePath: productDetailed.images.isNotEmpty ? productDetailed.images[0].path : ""),
             Text(productDetailed.product.title)
           ],
         ),
@@ -33,11 +39,11 @@ class ProductsSliderItem extends StatelessWidget {
 
 
 class ProductImageContainer extends StatelessWidget {
-  final Color color;
+  final bool isSelected;
   final String productImagePath;
   const ProductImageContainer({
     Key? key,
-    required this.color, required this.productImagePath,
+required this.productImagePath, required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -54,9 +60,15 @@ class ProductImageContainer extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(height: circleHeight,decoration: const BoxDecoration(color: Colors.grey, shape: BoxShape.circle)),
+              child: Container(height: circleHeight,decoration:  BoxDecoration(color:  isSelected ? AppTheme.primaryColor : AppTheme.disable, shape: BoxShape.circle)),
             ),
-            const Icon(Icons.no_photography_rounded)
+            Transform.scale(
+              scale:  isSelected ? 1.5 : 1,
+              child: Image.file(
+                      File(productImagePath),
+                      fit: BoxFit.cover,
+                    ),
+            )
           ]),
     );
   }

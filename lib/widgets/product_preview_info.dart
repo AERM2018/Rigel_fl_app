@@ -21,9 +21,10 @@ class ProductPreviewInfo extends StatelessWidget {
         children: [
           SizedBox(
             width: 100,
+            height: 150,
             child: (productDetailed.images.isEmpty)
             ? Image.asset("assets/no-products-found.png")
-            :  Image.file(File(productDetailed.images[0].path))
+            :  Image.file(File(productDetailed.images[0].path),fit: BoxFit.cover,)
            
           ),
           Container(

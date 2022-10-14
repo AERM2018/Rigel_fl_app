@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
             "home":(context) => const HomeScreen(),
             "newProduct":(context) => const NewProductScreen(),
             "productImages":(context) => const ProductImagesScreen(),
+            "product":(context) => const ProductScreen(),
           },
           theme: AppTheme.ligthTheme,
         ),
