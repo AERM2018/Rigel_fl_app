@@ -67,4 +67,9 @@ class ProductProvider with ChangeNotifier {
     temporalProductImages = [...temporalProductImages, path.toString()];
     notifyListeners();
   }
+
+  removeTemporalProductImage(){
+    temporalProductImages = [];
+    notifyListeners();
+  }
 }

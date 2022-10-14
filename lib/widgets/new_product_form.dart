@@ -114,7 +114,10 @@ class _NewProductFormState extends State<NewProductForm> {
                           product:
                               Product.fromMap(serializeProduct(newProductMap)),
                           images: prepareProductImages(
-                              productProvider.temporalProductImages))).then((value) => Navigator.pop(context));
+                              productProvider.temporalProductImages))).then((value){ 
+                                productProvider.removeTemporalProductImage();
+                                Navigator.pop(context);
+                              });
                     }
                   },
                   child: const Text("Save")),
