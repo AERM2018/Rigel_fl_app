@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rigel_app/themes/app_theme.dart';
 
 class CapacitySquare extends StatelessWidget {
   final String title;
@@ -8,17 +9,21 @@ class CapacitySquare extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      width: 80,
+      height: 80,
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.white),
+        color: Colors.transparent,
+        border: Border.all(color: Colors.white, width: 0.7),
         borderRadius: const BorderRadius.all(Radius.circular(10))
       ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title),
-            Text("$data"),
+            Text(title, style: AppTheme.h4w,),
+            Text("$data%", style: AppTheme.h3boldw,),
           ]
         ),
       ),

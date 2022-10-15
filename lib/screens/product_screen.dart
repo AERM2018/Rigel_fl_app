@@ -15,7 +15,23 @@ class ProductScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: AppTheme.primaryColor,
       ),
-      body: ProductFullInfo(product: productProvider.productSelected! ),
+      body: Stack(
+        children:[
+          ProductFullInfo(product: productProvider.productSelected! ),
+          const Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CartDisplayer(isMini: true)
+          ),
+          const Positioned(
+            bottom: 70,
+            left: 0,
+            right: 0,
+            child:  AddToCarCard()
+          )
+        ]
+      ),
       backgroundColor: AppTheme.primaryColor,
     );
   }

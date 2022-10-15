@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class AppTheme{
 
   static Color primaryColor = const Color.fromRGBO(255, 152, 89, 1);
-  static Color primaryColorLighter = Color.fromARGB(251, 238, 202, 134);
-  static Color secondaryColor = Colors.black87;
-  static Color thirdColor = Colors.white70;
+  static Color primaryColorLighter = Color.fromRGBO(238, 202, 134, 0.984);
+  static Color secondaryColor = Colors.black;
+  static Color thirdColor = Colors.white;
   static Color disable = Colors.grey.shade400;
   static Color disableDark = Colors.grey;
   static TextStyle h1b = TextStyle(fontSize: 20, color: secondaryColor);

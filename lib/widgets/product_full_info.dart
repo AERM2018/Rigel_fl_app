@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:rigel_app/models/models.dart';
 import 'package:rigel_app/themes/app_theme.dart';
+import 'package:rigel_app/widgets/add_to_car_card.dart';
+import 'package:rigel_app/widgets/capacity_square.dart';
 
 class ProductFullInfo extends StatelessWidget {
   final ProductDetailed product;
@@ -12,12 +14,12 @@ class ProductFullInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    return SizedBox(
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        SizedBox(
           width: screenWidth,
-          height: 250,
+          height: 230,
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Image.file(
               File(product.images[0].path),
@@ -30,14 +32,14 @@ class ProductFullInfo extends StatelessWidget {
           ]),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
             product.product.title,
             style: AppTheme.h1boldw,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -63,12 +65,24 @@ class ProductFullInfo extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 15),
           child: Text(
             "Capacity",
             style: AppTheme.h3boldw,
           ),
-        )
+        ),
+        SizedBox(
+          width: screenWidth * 0.8,
+          child: Row(
+            children: [
+              CapacitySquare(title: "Calories", data: product.product.calories),
+              const SizedBox(width: 20,),
+              CapacitySquare(title: "Additives", data: product.product.additives),
+              const SizedBox(width: 20,),
+              CapacitySquare(title: "Vitamins", data: product.product.vitamins),
+            ],
+          ),
+        ),
       ]),
     );
   }
