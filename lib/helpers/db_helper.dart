@@ -54,6 +54,22 @@ class DbHelper{
           CONSTRAINT fk_product FOREIGN KEY(productId) REFERENCES products(id)
         );
       ''');
+    await db.execute('''
+        CREATE TABLE carts(
+          id INTEGER PRIMARY KEY,
+          total FLOAT NOT NULL
+        );
+      ''');
+    await db.execute('''
+        CREATE TABLE cartProducts(
+          id INTEGER PRIMARY KEY,
+          productId INTEGER NOT NULL,
+          quantity INTEGER NOT NULL,
+          cartId INTEGER NOT NULL,
+          CONSTRAINT fk_product FOREIGN KEY(productId) REFERENCES products(id),
+          CONSTRAINT fk_cart FOREIGN KEY(cartId) REFERENCES carts(id)
+        );
+      ''');
     await _createDefaultCategories(db);
   }
 

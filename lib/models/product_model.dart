@@ -144,6 +144,18 @@ class ProductDetailed{
     }))
     : [];
   }
+
+  static Future<ProductDetailed?> findById(int id) async {
+    Database db = await DbHelper.instance.db;
+    var rawProduct = await db.query("products",where: "id = ?",whereArgs: [id]);
+    if(rawProduct.isNotEmpty){
+      var images = await ProductImage.findAllByProductId(int.tryParse(rawProduct[0]["id"].toString()));
+      return ProductDetailed(
+            product: Product.fromMap(rawProduct[0]),
+            images: images);
+    }
+    return null;
+  }
 }
 
 
