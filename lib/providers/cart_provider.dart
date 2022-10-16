@@ -11,12 +11,15 @@ class CartProvider with ChangeNotifier{
   }
 
   void addItem(ProductDetailed item, int quantity){
+    double itemTotal = 0;
     var itemAlreadyStored = getCartItemByProductId(item.product.id!);
     if( itemAlreadyStored != null){
       changeProductQuantity(item.product.id!,itemAlreadyStored.quantity + quantity);
+      itemTotal = item.product.price * itemAlreadyStored.quantity + quantity;
     }else{
       CartItemResponse cartItem = CartItemResponse(quantity: quantity, productDetailed: item);
       cartItems = [...cartItems, cartItem];
+      itemTotal = item.product.price * quantity;
     }
     if(
       cartItemSelected == null &&
@@ -24,6 +27,8 @@ class CartProvider with ChangeNotifier{
     ){
       cartItemSelected = cartItems[0];
     }
+    total += itemTotal;
+    total = double.parse(total.toStringAsFixed(2));
     notifyListeners();
   }
 
@@ -35,6 +40,8 @@ class CartProvider with ChangeNotifier{
   void changeProductQuantity(int productId,int quantity){
     CartItemResponse item = cartItems.firstWhere((cartItem) => cartItem.productDetailed.product.id == productId);
     item.quantity = quantity;
+    total += item.quantity * item.productDetailed.product.price;
+    total = double.parse(total.toStringAsFixed(2));
     notifyListeners();
   }
 

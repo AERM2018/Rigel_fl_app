@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 import 'package:rigel_app/widgets/add_to_cart_card.dart';
 import 'package:rigel_app/widgets/cart_items_slider.dart';
 
 class CartScreen extends StatelessWidget {
-  const CartScreen({Key? key}) : super(key: key);
+  CartScreen({Key? key}) : super(key: key);
 
   @override
+  
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppTheme.primaryColor,
@@ -22,7 +26,29 @@ class CartScreen extends StatelessWidget {
               color: AppTheme.secondaryColor,
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
               height: MediaQuery.of(context).size.height -100,
-              child: const CartItemsSlider()
+              child: Column(
+                children: [
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: const CartItemsSlider()
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${cartProvider.cartItems.length} ${cartProvider.cartItems.length > 1 ? "items" : "item"}",
+                          style: AppTheme.h3w,
+                        ),
+                        const CartTotal()
+                      ],
+                    ),
+                  )
+                ],
+              )
             )
           ),
           const Positioned(
@@ -34,6 +60,52 @@ class CartScreen extends StatelessWidget {
               )),
         ],
       ),
+    );
+  }
+}
+
+class CartTotal extends StatelessWidget {
+  const CartTotal({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    BorderRadius borderRadius = const BorderRadius.all(Radius.circular(10));
+    return SizedBox(
+      width: 170,
+      height: 40,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children:  [
+        Positioned(
+          left: 0,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: 100,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppTheme.primaryColorLighter, width: 1.3),
+              borderRadius: const BorderRadius.all(Radius.circular(10))
+            ),
+            child: Center(child: Text("\$${cartProvider.total}", style: AppTheme.h3w)),
+          ),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          bottom: 0,
+          child: ElevatedButton(
+            onPressed: (){}, 
+            style: ElevatedButton.styleFrom(
+              primary: AppTheme.primaryColorLighter,
+              shape: RoundedRectangleBorder(borderRadius: borderRadius)
+            ),
+            child: Text("Buy now", style: AppTheme.h4b), 
+          )
+        )
+      ],)
     );
   }
 }

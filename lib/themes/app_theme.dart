@@ -39,7 +39,8 @@ class AppTheme{
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: TextButton.styleFrom(
-          minimumSize: const Size(double.infinity, 38),
+          minimumSize: const Size(80, 38),
+          maximumSize: const Size(double.infinity, 38),
           backgroundColor: primaryColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))

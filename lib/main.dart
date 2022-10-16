@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             "newProduct":(context) => const NewProductScreen(),
             "productImages":(context) => const ProductImagesScreen(),
             "product":(context) => const ProductScreen(),
-            "cart":(context) => const CartScreen(),
+            "cart":(context) => CartScreen(),
           },
           theme: AppTheme.ligthTheme,
         ),

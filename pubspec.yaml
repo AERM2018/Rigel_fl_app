@@ -41,6 +41,7 @@ dependencies:
   file_picker: ^5.2.0+1
   flutter_rating_bar: ^4.0.1
   count_stepper: ^0.0.4
+  counter_button: ^1.0.1
 
 dev_dependencies:
   flutter_test:

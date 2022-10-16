@@ -1,4 +1,5 @@
 import 'package:count_stepper/count_stepper.dart';
+import 'package:counter_button/counter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rigel_app/providers/cart_provider.dart';
@@ -14,6 +15,7 @@ class AddToCartCard extends StatefulWidget {
 }
 
 class _AddToCartCardState extends State<AddToCartCard> {
+  // StepperController stepperController = StepperController();
   int quantity = 1;
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,12 @@ class _AddToCartCardState extends State<AddToCartCard> {
       cartProvider.getCartItemByProductId(
                 cartProvider.cartItemSelected!.productDetailed.product.id!) != null
     ){
-      quantity = cartProvider.getCartItemByProductId(
-              cartProvider.cartItemSelected!.productDetailed.product.id!)!.quantity;
+      quantity = cartProvider
+            .getCartItemByProductId(cartProvider.cartItemSelected!.productDetailed.product.id!)!.quantity;
+              setState(() {});
     }
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         shape: BoxShape.rectangle,
@@ -41,21 +44,15 @@ class _AddToCartCardState extends State<AddToCartCard> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CountStepper(
-                iconColor: AppTheme.secondaryColor,
-                defaultValue: quantity,
-                max: 100,
-                min: 0,
-                iconDecrementColor: AppTheme.secondaryColor,
-                splashRadius: 30,
-                onPressed: (value) { 
+              CounterButton(count: quantity, onChange: ( value ){
+                  if(value <= 0) return;
                   if(!widget.isUpdatingQuantity){
                     quantity = value;
                     setState(() {});
                   }else{
                     cartProvider.changeProductQuantity(cartProvider.cartItemSelected!.productDetailed.product.id!, value);
                   }
-                },
+                }, loading: false
               ),
               Text( !widget.isUpdatingQuantity
                   ? "\$${productProvider.productSelected!.product.price}"
@@ -67,15 +64,18 @@ class _AddToCartCardState extends State<AddToCartCard> {
           const SizedBox(height: 20,),
           !widget.isUpdatingQuantity
           ?
-          ElevatedButton(
-              onPressed: () => !widget.isUpdatingQuantity ? cartProvider.addItem(productProvider.productSelected!, quantity) : null,
-              style: ElevatedButton.styleFrom(
-                primary: AppTheme.primaryColorLighter
-              ),
-              child: Text(
-                "Add to cart",
-                style: AppTheme.h2boldb,
-          ))
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton(
+                onPressed: () => !widget.isUpdatingQuantity ? cartProvider.addItem(productProvider.productSelected!, quantity) : null,
+                style: ElevatedButton.styleFrom(
+                  primary: AppTheme.primaryColorLighter
+                ),
+                child: Text(
+                  "Add to cart",
+                  style: AppTheme.h2boldb,
+            )),
+          )
           : SizedBox(
             width: double.infinity,
             child: Text(cartProvider.cartItemSelected!.productDetailed.product.title,
