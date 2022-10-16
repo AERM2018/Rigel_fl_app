@@ -10,11 +10,11 @@ class CartResponse{
 }
 
 class CartItemResponse{
-  final int id;
+  final int? id;
   final ProductDetailed productDetailed;
-  final int quantity;
+  late int quantity;
   CartItemResponse({
-    required this.id,
+    this.id,
     required this.quantity,
     required this.productDetailed,
   });
