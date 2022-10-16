@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rigel_app/themes/app_theme.dart';
-import 'package:rigel_app/widgets/add_to_car_cart.dart';
+import 'package:rigel_app/widgets/add_to_cart_card.dart';
 import 'package:rigel_app/widgets/cart_items_slider.dart';
 
 class CartScreen extends StatelessWidget {
@@ -29,7 +29,7 @@ class CartScreen extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              child: AddToCarCart(
+              child: AddToCartCard(
                 isUpdatingQuantity: true,
               )),
         ],

@@ -2,7 +2,7 @@ export 'package:rigel_app/widgets/cart_items_slider.dart';
 
 export 'package:rigel_app/widgets/cart_items_slider_item.dart';
 export 'package:rigel_app/widgets/cart_displayer.dart';
-export 'package:rigel_app/widgets/add_to_car_cart.dart';
+export 'package:rigel_app/widgets/add_to_cart_card.dart';
 export 'package:rigel_app/widgets/capacity_square.dart';
 export 'package:rigel_app/widgets/product_full_info.dart';
 export 'package:rigel_app/widgets/product_preview_info.dart';

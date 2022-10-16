@@ -31,7 +31,7 @@ class ProductScreen extends StatelessWidget {
             bottom: (!isCartEmpty) ? 70 : 0,
             left: 0,
             right: 0,
-            child:  const AddToCarCart(isUpdatingQuantity: false,)
+            child:  const AddToCartCard(isUpdatingQuantity: false,)
           )
         ]
       ),

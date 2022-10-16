@@ -5,15 +5,15 @@ import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 
-class AddToCarCart extends StatefulWidget {
+class AddToCartCard extends StatefulWidget {
   final bool isUpdatingQuantity;
-  const AddToCarCart({Key? key, required this.isUpdatingQuantity}) : super(key: key);
+  const AddToCartCard({Key? key, required this.isUpdatingQuantity}) : super(key: key);
 
   @override
-  State<AddToCarCart> createState() => _AddToCarCartState();
+  State<AddToCartCard> createState() => _AddToCartCardState();
 }
 
-class _AddToCarCartState extends State<AddToCarCart> {
+class _AddToCartCardState extends State<AddToCartCard> {
   int quantity = 1;
   @override
   Widget build(BuildContext context) {
