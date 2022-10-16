@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:rigel_app/models/models.dart';
 import 'package:rigel_app/themes/app_theme.dart';
-import 'package:rigel_app/widgets/add_to_car_card.dart';
+import 'package:rigel_app/widgets/add_to_car_cart.dart';
 import 'package:rigel_app/widgets/capacity_square.dart';
 
 class ProductFullInfo extends StatelessWidget {

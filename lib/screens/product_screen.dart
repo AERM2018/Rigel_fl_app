@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 import 'package:rigel_app/widgets/widgets.dart';
@@ -10,6 +11,8 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    bool isCartEmpty = cartProvider.cartItems.isEmpty;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -18,17 +21,17 @@ class ProductScreen extends StatelessWidget {
       body: Stack(
         children:[
           ProductFullInfo(product: productProvider.productSelected! ),
-          const Positioned(
+          if ( !isCartEmpty ) ...[const Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: CartDisplayer(isMini: true)
-          ),
-          const Positioned(
-            bottom: 70,
+          )],
+          Positioned(
+            bottom: (!isCartEmpty) ? 70 : 0,
             left: 0,
             right: 0,
-            child:  AddToCarCard()
+            child:  const AddToCarCart(isUpdatingQuantity: false,)
           )
         ]
       ),

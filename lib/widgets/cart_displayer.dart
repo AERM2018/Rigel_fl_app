@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 
 class CartDisplayer extends StatelessWidget {
@@ -7,32 +9,35 @@ class CartDisplayer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
-      height: isMini ? 100 : MediaQuery.of(context).size.height,
-      decoration: BoxDecoration(
-        color: AppTheme.secondaryColor
-      ),
-      child: Column(
-      mainAxisAlignment: isMini ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical:25),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Transform.scale(scale: 1.5,child: Icon(Icons.shopping_bag_outlined, color: AppTheme.thirdColor,)),
-                    const SizedBox(width: 20),
-                    Text("Cart", style: AppTheme.h3w,)
-                  ],
-                ),
-                isMini ? const ItemCounterContainer() : const SizedBox()
-              ],
-            ),
-          )
-        ],
+    return GestureDetector(
+      onTap: () => isMini ? Navigator.pushNamed(context, "cart") : null,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15),
+        height: isMini ? 100 : MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          color: AppTheme.secondaryColor
+        ),
+        child: Column(
+        mainAxisAlignment: isMini ? MainAxisAlignment.end : MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical:25),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Transform.scale(scale: 1.5,child: Icon(Icons.shopping_bag_outlined, color: AppTheme.thirdColor,)),
+                      const SizedBox(width: 20),
+                      Text("Cart", style: AppTheme.h3w,)
+                    ],
+                  ),
+                  isMini ? const ItemCounterContainer() : const SizedBox()
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -45,6 +50,7 @@ class ItemCounterContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     double circleHeight = 30;
     return SizedBox(
       height: circleHeight,
@@ -59,7 +65,7 @@ class ItemCounterContainer extends StatelessWidget {
               decoration: BoxDecoration(
                   color: AppTheme.thirdColor, shape: BoxShape.circle)),
         ),
-       Text("2", style: AppTheme.h2boldb,)
+       Text("${cartProvider.cartItems.length}", style: AppTheme.h2boldb,)
       ]),
     );
   }
