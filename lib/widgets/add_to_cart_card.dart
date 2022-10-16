@@ -49,8 +49,12 @@ class _AddToCartCardState extends State<AddToCartCard> {
                 iconDecrementColor: AppTheme.secondaryColor,
                 splashRadius: 30,
                 onPressed: (value) { 
-                  quantity = value;
-                  setState(() {});
+                  if(!widget.isUpdatingQuantity){
+                    quantity = value;
+                    setState(() {});
+                  }else{
+                    cartProvider.changeProductQuantity(cartProvider.cartItemSelected!.productDetailed.product.id!, value);
+                  }
                 },
               ),
               Text( !widget.isUpdatingQuantity

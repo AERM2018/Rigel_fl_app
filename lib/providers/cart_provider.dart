@@ -35,6 +35,7 @@ class CartProvider with ChangeNotifier{
   void changeProductQuantity(int productId,int quantity){
     CartItemResponse item = cartItems.firstWhere((cartItem) => cartItem.productDetailed.product.id == productId);
     item.quantity = quantity;
+    notifyListeners();
   }
 
   CartItemResponse? getCartItemByProductId(int productId){
