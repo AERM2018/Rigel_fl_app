@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:rigel_app/models/models.dart';
+import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 import 'package:rigel_app/widgets/add_to_cart_card.dart';
 import 'package:rigel_app/widgets/capacity_square.dart';
@@ -13,6 +15,7 @@ class ProductFullInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context, listen: false);
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
@@ -24,10 +27,12 @@ class ProductFullInfo extends StatelessWidget {
             Image.file(
               File(product.images[0].path),
               fit: BoxFit.cover,
+              width: screenWidth * 0.42,
             ),
             Image.file(
               File(product.images[0].path),
               fit: BoxFit.cover,
+              width: screenWidth * 0.42,
             ),
           ]),
         ),
@@ -54,12 +59,14 @@ class ProductFullInfo extends StatelessWidget {
                 ),
               ),
               RatingBar.builder(
+                  initialRating: product.product.ranking!.toDouble(),
                   unratedColor: Colors.white12,
                   itemSize: 20,
                   itemBuilder: (context, index) =>
                       const Icon(Icons.star, color: Colors.white),
-                  onRatingUpdate: (val) {
-                    print(val);
+                  onRatingUpdate: (val) async{
+                    await product.product.rankProduct(val.toInt());
+                    productProvider.selectProduct(product);
                   })
             ],
           ),

@@ -7,7 +7,7 @@ class Product{
   final int categoryId;
   // final ProductCategory category;
   final double price;
-  final int? ranking;
+  int? ranking = 0;
   final String title;
   final String description;
   final double calories;
@@ -71,6 +71,12 @@ class Product{
   Future<int> insert() async{
     Database db = await DbHelper.instance.db;
     return await db.insert('products', toMap());
+  }
+
+  Future<void> rankProduct(int inRanking) async{
+    Database db = await DbHelper.instance.db;
+    ranking = inRanking;
+    await db.update("products", toMap(), where: "id = ?", whereArgs: [id]);
   }
 }
 

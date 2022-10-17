@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:rigel_app/models/models.dart';
+import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 
@@ -13,6 +14,7 @@ class ProductPreviewInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
+    CartProvider cartProvider = Provider.of<CartProvider>(context,  listen: false);
     ProductDetailed? productDetailed = productProvider.productSelected ?? productProvider.productsDetailed[0];
     List<String> productImages = productProvider.temporalProductImages;
     return Container(
@@ -39,10 +41,12 @@ class ProductPreviewInfo extends StatelessWidget {
                 Text(productDetailed.product.title, style: AppTheme.h2boldw),
                 Text("\$${productDetailed.product.price} MXN", style: AppTheme.h3w),
                 RatingBar.builder(
+                  ignoreGestures: true,
+                  initialRating: productDetailed.product.ranking!.toDouble(),
                   unratedColor: Colors.white12,
                   itemSize: 15,
                   itemBuilder: (context, index) => const Icon(Icons.star, color:Colors.white), 
-                  onRatingUpdate: (val){ print(val);}
+                  onRatingUpdate: (val){}
                 ),
                 ElevatedButton(
                   onPressed: (){},
