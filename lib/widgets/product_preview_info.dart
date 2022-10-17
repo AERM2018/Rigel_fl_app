@@ -17,6 +17,10 @@ class ProductPreviewInfo extends StatelessWidget {
     CartProvider cartProvider = Provider.of<CartProvider>(context,  listen: false);
     ProductDetailed? productDetailed = productProvider.productSelected ?? productProvider.productsDetailed[0];
     List<String> productImages = productProvider.temporalProductImages;
+    const snackBar = SnackBar(
+      content: Text('Item added to cart!'),
+      duration: Duration(milliseconds: 1200),
+    );
     return Container(
       // color: Colors.pink,
       child: Row(
@@ -49,7 +53,10 @@ class ProductPreviewInfo extends StatelessWidget {
                   onRatingUpdate: (val){}
                 ),
                 ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    cartProvider.addItem(productProvider.productSelected!, 1);
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  },
                   style: ElevatedButton.styleFrom(
                     primary: AppTheme.thirdColor
                   ),
