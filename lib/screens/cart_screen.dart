@@ -18,7 +18,10 @@ class CartScreen extends StatelessWidget {
         elevation: 0,
       ),
       backgroundColor: AppTheme.primaryColor,
-      body: Stack(
+      body: 
+      cartProvider.cartItems.isNotEmpty
+      ?
+      Stack(
         children: [
           Positioned(
             top: 100, left: 0, right: 0,
@@ -59,7 +62,9 @@ class CartScreen extends StatelessWidget {
                 isUpdatingQuantity: true,
               )),
         ],
-      ),
+      )
+      : 
+      Transform.scale(scale: 1.8,child: Center(child: Image.asset("assets/empty-cart.png"),))
     );
   }
 }

@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-          IconButton(onPressed: (){}, icon: Icon(Icons.shopping_bag_outlined,color: AppTheme.secondaryColor,))
+          IconButton(onPressed: () => Navigator.pushNamed(context, 'cart'), icon: Icon(Icons.shopping_bag_outlined,color: AppTheme.secondaryColor,))
         ],
         title: Text("Rigel", style: AppTheme.h1boldb,),
       ),
