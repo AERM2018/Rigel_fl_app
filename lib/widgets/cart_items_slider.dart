@@ -8,7 +8,7 @@ class CartItemsSlider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    CartProvider cartProvider = Provider.of<CartProvider>(context, listen: false);
+    CartProvider cartProvider = Provider.of<CartProvider>(context, listen: true);
     print("cart items");
     print(cartProvider.cartItems);
     return ListView.builder(

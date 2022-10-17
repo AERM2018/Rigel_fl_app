@@ -11,15 +11,13 @@ class CartProvider with ChangeNotifier{
   }
 
   void addItem(ProductDetailed item, int quantity){
-    double itemTotal = 0;
     var itemAlreadyStored = getCartItemByProductId(item.product.id!);
     if( itemAlreadyStored != null){
       changeProductQuantity(item.product.id!,itemAlreadyStored.quantity + quantity);
-      itemTotal = item.product.price * itemAlreadyStored.quantity + quantity;
     }else{
       CartItemResponse cartItem = CartItemResponse(quantity: quantity, productDetailed: item);
       cartItems = [...cartItems, cartItem];
-      itemTotal = item.product.price * quantity;
+      updateCartTotal(item.product.price, quantity);
     }
     if(
       cartItemSelected == null &&
@@ -27,8 +25,19 @@ class CartProvider with ChangeNotifier{
     ){
       cartItemSelected = cartItems[0];
     }
-    total += itemTotal;
-    total = double.parse(total.toStringAsFixed(2));
+    notifyListeners();
+  }
+
+  void removeItem(int index){
+    CartItemResponse cartItemToDelete = cartItems[index];
+      cartItems.removeAt(index);
+updateCartTotal(cartItemToDelete.productDetailed.product.price, - cartItemToDelete.quantity);
+    // changeProductQuantity(cartItems[index].productDetailed.product.id!, 0);
+    if(cartItems.isEmpty){
+      cartItemSelected = null;
+    }else{
+      cartItemSelected = cartItems[index != 0 ? index  - 1 : 0];
+    }
     notifyListeners();
   }
 
@@ -39,10 +48,16 @@ class CartProvider with ChangeNotifier{
 
   void changeProductQuantity(int productId,int quantity){
     CartItemResponse item = cartItems.firstWhere((cartItem) => cartItem.productDetailed.product.id == productId);
+    int oldQuantity = item.quantity;
     item.quantity = quantity;
-    total += item.quantity * item.productDetailed.product.price;
+    updateCartTotal(item.productDetailed.product.price, quantity != 0 ? quantity - oldQuantity : -oldQuantity);
+  }
+
+  void updateCartTotal(double productPrice,int quantityDiffer){
+    total += productPrice * quantityDiffer;
     total = double.parse(total.toStringAsFixed(2));
     notifyListeners();
+
   }
 
   CartItemResponse? getCartItemByProductId(int productId){
