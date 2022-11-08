@@ -42,6 +42,9 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   count_stepper: ^0.0.4
   counter_button: ^1.0.1
+  http: ^0.13.5
+  firebase_database: ^10.0.4
+  firebase_storage: ^11.0.4
 
 dev_dependencies:
   flutter_test:
