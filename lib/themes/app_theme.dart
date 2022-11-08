@@ -46,6 +46,9 @@ class AppTheme{
             borderRadius: BorderRadius.all(Radius.circular(20))
           )
         )
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primaryColor
       )
     );
   }
