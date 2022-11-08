@@ -15,7 +15,7 @@ class ProductPreviewInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     CartProvider cartProvider = Provider.of<CartProvider>(context,  listen: false);
-    ProductDetailed? productDetailed = productProvider.productSelected ?? productProvider.productsDetailed[0];
+    Product? product = productProvider.productSelected ?? productProvider.products[0];
     List<String> productImages = productProvider.temporalProductImages;
     const snackBar = SnackBar(
       content: Text('Item added to cart!'),
@@ -28,9 +28,9 @@ class ProductPreviewInfo extends StatelessWidget {
           SizedBox(
             width: 100,
             height: 150,
-            child: (productDetailed.images.isEmpty)
+            child: (product.images!.isEmpty)
             ? Image.asset("assets/no-products-found.png")
-            :  Image.file(File(productDetailed.images[0].path),fit: BoxFit.cover,)
+            :  Image.network(product.images![0],fit: BoxFit.cover,)
            
           ),
           Container(
@@ -42,11 +42,11 @@ class ProductPreviewInfo extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(productDetailed.product.title, style: AppTheme.h2boldw),
-                Text("\$${productDetailed.product.price} MXN", style: AppTheme.h3w),
+                Text(product.title, style: AppTheme.h2boldw),
+                Text("\$${product.price} MXN", style: AppTheme.h3w),
                 RatingBar.builder(
                   ignoreGestures: true,
-                  initialRating: productDetailed.product.ranking!.toDouble(),
+                  initialRating: product.ranking!.toDouble(),
                   unratedColor: Colors.white12,
                   itemSize: 15,
                   itemBuilder: (context, index) => const Icon(Icons.star, color:Colors.white), 

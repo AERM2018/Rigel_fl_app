@@ -7,20 +7,20 @@ import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
 
 class ProductsSliderItem extends StatelessWidget {
-    final ProductDetailed productDetailed;
+    final Product product;
 
-  const ProductsSliderItem({Key? key, required this.productDetailed}) : super(key: key);
+  const ProductsSliderItem({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
     // List<String> productImages = productProvider.productImages;d
-    bool isSelected = productDetailed.product.id == productProvider.productSelected?.product.id;
+    bool isSelected = product.id == productProvider.productSelected?.id;
     return GestureDetector(
-      onTap: () => productProvider.selectProduct(productDetailed),
+      onTap: () => productProvider.selectProduct(product),
       onDoubleTap: () {
         if( !isSelected ){
-          productProvider.selectProduct(productDetailed);
+          productProvider.selectProduct(product);
         }
         Navigator.pushNamed(context, "product");
       },
@@ -28,8 +28,8 @@ class ProductsSliderItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProductImageContainer(isSelected:isSelected, productImagePath: productDetailed.images.isNotEmpty ? productDetailed.images[0].path : ""),
-            Text(productDetailed.product.title)
+            ProductImageContainer(isSelected:isSelected, productImagePath: product.images!.isNotEmpty ? product.images![0] : ""),
+            Text(product.title)
           ],
         ),
       ),
@@ -64,8 +64,8 @@ required this.productImagePath, required this.isSelected,
             ),
             Transform.scale(
               scale:  isSelected ? 1.5 : 1,
-              child: Image.file(
-                      File(productImagePath),
+              child: Image.network(
+                      productImagePath,
                       fit: BoxFit.cover,
                     ),
             )

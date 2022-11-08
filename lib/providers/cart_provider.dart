@@ -10,18 +10,18 @@ class CartProvider with ChangeNotifier{
     print("Cart provider initialized");
   }
 
-  void addItem(ProductDetailed item, int quantity){
-    var itemAlreadyStored = getCartItemByProductId(item.product.id!);
+  void addItem(Product item, int quantity){
+    var itemAlreadyStored = getCartItemByProductId(item.id!);
     if( itemAlreadyStored != null){
-      changeProductQuantity(item.product.id!,itemAlreadyStored.quantity + quantity);
+      changeProductQuantity(item.id!,itemAlreadyStored.quantity + quantity);
     }else{
-      CartItemResponse cartItem = CartItemResponse(quantity: quantity, productDetailed: item);
+      CartItemResponse cartItem = CartItemResponse(quantity: quantity, product: item);
       cartItems = [...cartItems, cartItem];
-      updateCartTotal(item.product.price, quantity);
+      updateCartTotal(item.price, quantity);
     }
     if(
       cartItemSelected == null &&
-      cartItemSelected?.productDetailed.product.id != cartItems[0].productDetailed.product.id
+      cartItemSelected?.product.id != cartItems[0].product.id
     ){
       cartItemSelected = cartItems[0];
     }
@@ -31,7 +31,7 @@ class CartProvider with ChangeNotifier{
   void removeItem(int index){
     CartItemResponse cartItemToDelete = cartItems[index];
       cartItems.removeAt(index);
-updateCartTotal(cartItemToDelete.productDetailed.product.price, - cartItemToDelete.quantity);
+updateCartTotal(cartItemToDelete.product.price, - cartItemToDelete.quantity);
     // changeProductQuantity(cartItems[index].productDetailed.product.id!, 0);
     if(cartItems.isEmpty){
       cartItemSelected = null;
@@ -46,11 +46,11 @@ updateCartTotal(cartItemToDelete.productDetailed.product.price, - cartItemToDele
     notifyListeners();
   }
 
-  void changeProductQuantity(int productId,int quantity){
-    CartItemResponse item = cartItems.firstWhere((cartItem) => cartItem.productDetailed.product.id == productId);
+  void changeProductQuantity(String productId,int quantity){
+    CartItemResponse item = cartItems.firstWhere((cartItem) => cartItem.product.id == productId);
     int oldQuantity = item.quantity;
     item.quantity = quantity;
-    updateCartTotal(item.productDetailed.product.price, quantity != 0 ? quantity - oldQuantity : -oldQuantity);
+    updateCartTotal(item.product.price, quantity != 0 ? quantity - oldQuantity : -oldQuantity);
   }
 
   void updateCartTotal(double productPrice,int quantityDiffer){
@@ -60,9 +60,9 @@ updateCartTotal(cartItemToDelete.productDetailed.product.price, - cartItemToDele
 
   }
 
-  CartItemResponse? getCartItemByProductId(int productId){
-    int id = cartItems.map((cartItem) => cartItem.productDetailed.product.id!).firstWhere((id) => id == productId, orElse: ()=>-1);
-    if(id == -1) return null;
-    return cartItems.firstWhere((cartItem) => cartItem.productDetailed.product.id == productId);
+  CartItemResponse? getCartItemByProductId(String productId){
+    String id = cartItems.map((cartItem) => cartItem.product.id!).firstWhere((id) => id == productId, orElse: ()=>"");
+    if(id == "") return null;
+    return cartItems.firstWhere((cartItem) => cartItem.product.id == productId);
   }
 }

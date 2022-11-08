@@ -12,8 +12,8 @@ class ProductsSlider extends StatelessWidget {
     ProductProvider productsProvider = Provider.of<ProductProvider>(context);
     // productsProvider.getProducts(categoryId: productsProvider.categorySelected?.id);
     print("objects");
-    print(productsProvider.productsDetailed);
-    double widthModifier = productsProvider.productsDetailed.length >= 4 ? 0.25 * 3 : 0.25 * productsProvider.productsDetailed.length;
+    print(productsProvider.products);
+    double widthModifier = productsProvider.products.length >= 4 ? 0.25 * 3 : 0.25 * productsProvider.products.length;
     // return (productsProvider.categorySelected == null )
     // ? CircularProgressIndicator(color: AppTheme.primaryColor
     return SizedBox(
@@ -24,9 +24,9 @@ class ProductsSlider extends StatelessWidget {
         itemBuilder: (context, index) => SizedBox(
           width:  MediaQuery.of(context).size.width * 0.25,
           // color: Colors.amber,
-          child: ProductsSliderItem( productDetailed: productsProvider.productsDetailed[index],),
+          child: ProductsSliderItem( product: productsProvider.products[index],),
         ),
-        itemCount: productsProvider.productsDetailed.length,
+        itemCount: productsProvider.products.length,
       ),
     );
   }

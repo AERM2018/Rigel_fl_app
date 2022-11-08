@@ -27,7 +27,7 @@ class CartItemsSliderItem extends StatelessWidget {
             children: [
               SizedBox(
                 width: 50,
-                child: Image.file(File(cartItem.productDetailed.images[0].path))
+                child: Image.file(File(cartItem.product.images![0]))
               ),
               Expanded(
                 child: Padding(
@@ -35,9 +35,9 @@ class CartItemsSliderItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(cartItem.productDetailed.product.title, style: AppTheme.h2w,),
+                      Text(cartItem.product.title, style: AppTheme.h2w,),
                       const SizedBox(height: 15),
-                      Text("\$${cartItem.productDetailed.product.price}", style: AppTheme.h3w,),
+                      Text("\$${cartItem.product.price}", style: AppTheme.h3w,),
                     ],
                   ),
                 ),

@@ -10,7 +10,7 @@ import 'package:rigel_app/widgets/add_to_cart_card.dart';
 import 'package:rigel_app/widgets/capacity_square.dart';
 
 class ProductFullInfo extends StatelessWidget {
-  final ProductDetailed product;
+  final Product product;
   const ProductFullInfo({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -24,13 +24,13 @@ class ProductFullInfo extends StatelessWidget {
           width: screenWidth,
           height: 230,
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.file(
-              File(product.images[0].path),
+            Image.network(
+              product.images![0],
               fit: BoxFit.cover,
               width: screenWidth * 0.42,
             ),
-            Image.file(
-              File(product.images[0].path),
+            Image.network(
+              product.images![0],
               fit: BoxFit.cover,
               width: screenWidth * 0.42,
             ),
@@ -39,7 +39,7 @@ class ProductFullInfo extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
           child: Text(
-            product.product.title,
+            product.title,
             style: AppTheme.h1boldw,
           ),
         ),
@@ -51,7 +51,7 @@ class ProductFullInfo extends StatelessWidget {
               SizedBox(
                 width: screenWidth * 0.52,
                 child: Text(
-                  product.product.description,
+                  product.description,
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -59,13 +59,13 @@ class ProductFullInfo extends StatelessWidget {
                 ),
               ),
               RatingBar.builder(
-                  initialRating: product.product.ranking!.toDouble(),
+                  initialRating: product.ranking!.toDouble(),
                   unratedColor: Colors.white12,
                   itemSize: 20,
                   itemBuilder: (context, index) =>
                       const Icon(Icons.star, color: Colors.white),
                   onRatingUpdate: (val) async{
-                    await product.product.rankProduct(val.toInt());
+                    await product.rankProduct(val.toInt());
                     productProvider.selectProduct(product);
                   })
             ],
@@ -82,11 +82,11 @@ class ProductFullInfo extends StatelessWidget {
           width: screenWidth * 0.8,
           child: Row(
             children: [
-              CapacitySquare(title: "Calories", data: product.product.calories),
+              CapacitySquare(title: "Calories", data: product.calories),
               const SizedBox(width: 20,),
-              CapacitySquare(title: "Additives", data: product.product.additives),
+              CapacitySquare(title: "Additives", data: product.additives),
               const SizedBox(width: 20,),
-              CapacitySquare(title: "Vitamins", data: product.product.vitamins),
+              CapacitySquare(title: "Vitamins", data: product.vitamins),
             ],
           ),
         ),

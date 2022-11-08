@@ -24,10 +24,10 @@ class _AddToCartCardState extends State<AddToCartCard> {
     if(
       widget.isUpdatingQuantity &&
       cartProvider.getCartItemByProductId(
-                cartProvider.cartItemSelected!.productDetailed.product.id!) != null
+                cartProvider.cartItemSelected!.product.id!) != null
     ){
       quantity = cartProvider
-            .getCartItemByProductId(cartProvider.cartItemSelected!.productDetailed.product.id!)!.quantity;
+            .getCartItemByProductId(cartProvider.cartItemSelected!.product.id!)!.quantity;
               setState(() {});
     }
     return Container(
@@ -50,13 +50,13 @@ class _AddToCartCardState extends State<AddToCartCard> {
                     quantity = value;
                     setState(() {});
                   }else{
-                    cartProvider.changeProductQuantity(cartProvider.cartItemSelected!.productDetailed.product.id!, value);
+                    cartProvider.changeProductQuantity(cartProvider.cartItemSelected!.product.id!, value);
                   }
                 }, loading: false
               ),
               Text( !widget.isUpdatingQuantity
-                  ? "\$${productProvider.productSelected!.product.price}"
-                  : "\$${cartProvider.cartItemSelected!.productDetailed.product.price}", 
+                  ? "\$${productProvider.productSelected!.price}"
+                  : "\$${cartProvider.cartItemSelected!.product.price}", 
                 style: AppTheme.h1boldb,
               )
             ],
@@ -78,7 +78,7 @@ class _AddToCartCardState extends State<AddToCartCard> {
           )
           : SizedBox(
             width: double.infinity,
-            child: Text(cartProvider.cartItemSelected!.productDetailed.product.title,
+            child: Text(cartProvider.cartItemSelected!.product.title,
                     style: AppTheme.h1boldb,
                   ),
           )]

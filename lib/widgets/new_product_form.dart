@@ -62,7 +62,7 @@ class _NewProductFormState extends State<NewProductForm> {
   Map<String, dynamic> newProductMap = {};
   @override
   Widget build(BuildContext context) {
-    int? categoryId = widget.category.id;
+    String? categoryId = widget.category.id;
     final ProductProvider productProvider =
         Provider.of<ProductProvider>(context);
     return Form(
@@ -106,21 +106,24 @@ class _NewProductFormState extends State<NewProductForm> {
                       )
                     ],
                   )),
-              ElevatedButton(
-                  onPressed: () async{
-                    if (_formKey.currentState!.validate()) {
-                      newProductMap['categoryId'] = widget.category.id;
-                      productProvider.addProduct(ProductDetailed(
-                          product:
-                              Product.fromMap(serializeProduct(newProductMap)),
-                          images: prepareProductImages(
-                              productProvider.temporalProductImages))).then((value){ 
-                                productProvider.removeTemporalProductImage();
-                                Navigator.pop(context);
-                              });
-                    }
-                  },
-                  child: const Text("Save")),
+              Container(
+                width: double.infinity,
+                child: ElevatedButton(
+                    onPressed: () async{
+                      // if (_formKey.currentState!.validate()) {
+                      //   newProductMap['categoryId'] = widget.category.id;
+                      //   productProvider.addProduct(ProductDetailed(
+                      //       product:
+                      //           Product.fromMap(serializeProduct(newProductMap)),
+                      //       images: prepareProductImages(
+                      //           productProvider.temporalProductImages))).then((value){ 
+                      //             productProvider.removeTemporalProductImage();
+                      //             Navigator.pop(context);
+                      //           });
+                      // }
+                    },
+                    child: const Text("Save")),
+              ),
               const SizedBox(
                 height: 10,
               )
@@ -143,10 +146,10 @@ class _NewProductFormState extends State<NewProductForm> {
     };
   }
 
-  List<ProductImage> prepareProductImages(
-      List<String> paths) {
-    return paths
-        .map((path) => ProductImage(path: path))
-        .toList();
-  }
+  // List<ProductImage> prepareProductImages(
+  //     List<String> paths) {
+  //   return paths
+  //       .map((path) => ProductImage(path: path))
+  //       .toList();
+  // }
 }
