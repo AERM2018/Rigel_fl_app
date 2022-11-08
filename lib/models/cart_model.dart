@@ -11,12 +11,12 @@ class CartResponse{
 
 class CartItemResponse{
   final int? id;
-  final ProductDetailed productDetailed;
+  final Product product;
   late int quantity;
   CartItemResponse({
     this.id,
     required this.quantity,
-    required this.productDetailed,
+    required this.product,
   });
 }
 
@@ -45,19 +45,19 @@ class Cart{
   }
 
   Future<List<CartItemResponse>> findAllItems() async {
-    Database db = await DbHelper.instance.db;
-    var cartItems = await db.query("cartProducts");
-    if(cartItems.isNotEmpty){
-      return await Future.wait(cartItems.map((cartItem)async{
-       ProductDetailed? product  = await ProductDetailed.findById(int.tryParse(cartItem['productId'].toString())!);
-       return CartItemResponse(
-          id: int.tryParse(cartItem['id'].toString()) ?? 0, 
-          quantity: int.tryParse(cartItem['quantity'].toString()) ?? 0,
-          productDetailed: product!
-        );
+    // Database db = await DbHelper.instance.db;
+    // var cartItems = await db.query("cartProducts");
+    // if(cartItems.isNotEmpty){
+    //   return await Future.wait(cartItems.map((cartItem)async{
+    //    Product? product  = await ProductDetailed.findById(int.tryParse(cartItem['productId'].toString())!);
+    //    return CartItemResponse(
+    //       id: int.tryParse(cartItem['id'].toString()) ?? 0, 
+    //       quantity: int.tryParse(cartItem['quantity'].toString()) ?? 0,
+    //       product: product!
+    //     );
 
-      }).toList());
-    }
+    //   }).toList());
+    // }
     return [];
   }
 
