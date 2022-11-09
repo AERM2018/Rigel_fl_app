@@ -62,7 +62,6 @@ class _NewProductFormState extends State<NewProductForm> {
   Map<String, dynamic> newProductMap = {};
   @override
   Widget build(BuildContext context) {
-    String? categoryId = widget.category.id;
     final ProductProvider productProvider =
         Provider.of<ProductProvider>(context);
     return Form(
@@ -109,18 +108,25 @@ class _NewProductFormState extends State<NewProductForm> {
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
-                    onPressed: () async{
-                      // if (_formKey.currentState!.validate()) {
-                      //   newProductMap['categoryId'] = widget.category.id;
-                      //   productProvider.addProduct(ProductDetailed(
-                      //       product:
-                      //           Product.fromMap(serializeProduct(newProductMap)),
-                      //       images: prepareProductImages(
-                      //           productProvider.temporalProductImages))).then((value){ 
-                      //             productProvider.removeTemporalProductImage();
-                      //             Navigator.pop(context);
-                      //           });
-                      // }
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        newProductMap['category'] = widget.category.toMap();
+                        List<String> imagesUrls = await productProvider.uploadImagesToStorage();
+                        newProductMap["images"] = imagesUrls;
+                        productProvider.addProduct(
+                            Product.fromMap(serializeProduct(newProductMap))
+                        );
+                        productProvider.removeTemporalProductImage();
+                        Navigator.pop(context);
+                        // productProvider.addProduct(Product(
+                        //     product:
+
+                        //     images: prepareProductImages(
+                        //         productProvider.temporalProductImages))).then((value){
+                        //           productProvider.removeTemporalProductImage();
+                        //           Navigator.pop(context);
+                        //         });
+                      }
                     },
                     child: const Text("Save")),
               ),
@@ -135,21 +141,15 @@ class _NewProductFormState extends State<NewProductForm> {
   Map<String, dynamic> serializeProduct(Map<String, dynamic> productMap) {
     return {
       "id": productMap["id"],
-      "categoryId": productMap["categoryId"],
-      "price": double.tryParse(productMap['price']!),
-      "ranking": int.tryParse(productMap["ranking"] ?? "0"),
+      "category": productMap["category"],
+      "price": double.parse(productMap['price']!),
+      "ranking": int.parse(productMap["ranking"] ?? "0"),
       "title": productMap["title"],
       "description": productMap["description"],
-      "calories": double.tryParse(productMap["calories"]!),
-      "additives": double.tryParse(productMap["additives"]!),
-      "vitamins": double.tryParse(productMap["vitamins"]!),
+      "calories": double.parse(productMap["calories"]!),
+      "additives": double.parse(productMap["additives"]!),
+      "vitamins": double.parse(productMap["vitamins"]!),
+      "images": productMap["images"] ?? []
     };
   }
-
-  // List<ProductImage> prepareProductImages(
-  //     List<String> paths) {
-  //   return paths
-  //       .map((path) => ProductImage(path: path))
-  //       .toList();
-  // }
 }

@@ -76,7 +76,9 @@ class ProductProvider with ChangeNotifier {
 
   Future<void >addProduct(Product product) async {
     // Save a product in firebase
-    // await product.save();
+    final newProductKey = FirebaseDatabase.instance.ref().child("products").push().key;
+    await FirebaseDatabase.instance.ref("products/$newProductKey").set(product.toMap());
+    // // await product.save();
     products = [...products, product];
     notifyListeners();
   }
@@ -94,6 +96,18 @@ class ProductProvider with ChangeNotifier {
   addTemporalProductImage(String path) {
     temporalProductImages = [...temporalProductImages, path.toString()];
     notifyListeners();
+  }
+
+  Future<List<String>> uploadImagesToStorage() async{
+    List<String> imageUrls = [];
+    for (var path in temporalProductImages) {
+      String fileName = basename(path); 
+      UploadTask uploadTask = FirebaseStorage.instance.ref().child("uploads/$fileName").putFile(File(path));
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String downloadUrl = await taskSnapshot.ref.getDownloadURL();
+      imageUrls.add(downloadUrl);
+    }
+    return imageUrls;
   }
 
   removeTemporalProductImage(){

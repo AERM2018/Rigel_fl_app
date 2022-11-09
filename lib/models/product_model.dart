@@ -34,13 +34,13 @@ class Product{
   factory Product.fromMap(Map<String,dynamic> json) => Product(
     id: json["id"],
     category: ProductCategory.fromMap(json["category"]),
-    price: json["price"],
+    price: double.parse(json["price"].toString()),
     ranking: json["ranking"],
     title: json["title"],
     description: json["description"],
-    calories: json["calories"],
-    additives: json["additives"],
-    vitamins: json["vitamins"],
+    calories: double.parse(json["calories"].toString()),
+    additives: double.parse(json["additives"].toString()),
+    vitamins: double.parse(json["vitamins"].toString()),
     images: json["images"]
    
   );
@@ -50,7 +50,7 @@ class Product{
     return {
       "id":id,
       // "categoryId":categoryId,
-      "category":category,
+      "category":category.toMap(),
       "price":price,
       "ranking":ranking,
       "title":title,
