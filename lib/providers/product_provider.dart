@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rigel_app/models/models.dart';
 
@@ -21,8 +24,6 @@ class ProductProvider with ChangeNotifier {
   }
 
   Future<void> getProductCategories() async {
-    isLoading = true;
-    notifyListeners();
 
     final url = Uri.https(_baseUrl, "products_categories.json");
     final res = await http.get(url);
@@ -80,6 +81,12 @@ class ProductProvider with ChangeNotifier {
     await FirebaseDatabase.instance.ref("products/$newProductKey").set(product.toMap());
     // // await product.save();
     products = [...products, product];
+    notifyListeners();
+  }
+
+  Future<void> rankProduct(int ranking) async{
+    await FirebaseDatabase.instance.ref("products/${productSelected!.id}").update({"ranking":ranking});
+    productSelected!.ranking = ranking;
     notifyListeners();
   }
 
