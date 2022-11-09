@@ -27,8 +27,14 @@ class ProductProvider with ChangeNotifier {
     final url = Uri.https(_baseUrl, "products_categories.json");
     final res = await http.get(url);
     final Map<String,dynamic> productsCategoriesMap = json.decode(res.body);
-
+    productsCategoriesMap.forEach((key, value){
+      value["id"]= key;
+      final productCategory = ProductCategory.fromMap(value);
+      categories.add(productCategory);
+    });
+    categorySelected = categories[0];
     getProducts(categoryId: productsCategoriesMap.keys.first);
+    notifyListeners();
   }
 
   setCategorySelected(ProductCategory category) async{
@@ -45,6 +51,7 @@ class ProductProvider with ChangeNotifier {
       }
        final url = Uri.https(_baseUrl, "products.json");
       final res = await http.get(url);
+      if(res.body == "null") return;
       final Map<String, dynamic> productsMap = json.decode(res.body);
       List<Product> productsFound = [];
       productsMap.forEach((key, value) {
