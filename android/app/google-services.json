@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "448529679160",
+    "firebase_url": "https://rigel-fl-app-default-rtdb.firebaseio.com",
+    "project_id": "rigel-fl-app",
+    "storage_bucket": "rigel-fl-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:448529679160:android:eace28e2e93979b95277cd",
+        "android_client_info": {
+          "package_name": "com.example.rigel_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "448529679160-pn2uqb0r1ibu8qmrs8fev73n4jeh4qde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQMexM1LxYxbLcbh1KZddItDmy87PbA78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "448529679160-pn2uqb0r1ibu8qmrs8fev73n4jeh4qde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
