@@ -14,7 +14,7 @@ class ProductPreviewInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProductProvider productProvider = Provider.of<ProductProvider>(context);
-    CartProvider cartProvider = Provider.of<CartProvider>(context,  listen: false);
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
     Product? product = productProvider.productSelected ?? productProvider.products[0];
     List<String> productImages = productProvider.temporalProductImages;
     const snackBar = SnackBar(
@@ -28,8 +28,11 @@ class ProductPreviewInfo extends StatelessWidget {
           SizedBox(
             width: 100,
             height: 150,
-            child: (product.images!.isEmpty)
-            ? Image.asset("assets/no-products-found.png")
+            child: (product.images == null)
+            ? Image.asset(
+                    "assets/pic-unavailable.png",
+                    width: 20,
+                  )
             :  Image.network(product.images![0],fit: BoxFit.cover,)
            
           ),

@@ -28,7 +28,7 @@ class ProductsSliderItem extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ProductImageContainer(isSelected:isSelected, productImagePath: product.images!.isNotEmpty ? product.images![0] : ""),
+            ProductImageContainer(isSelected:isSelected, productImagePath: product.images != null ?  product.images![0] : ""),
             Text(product.title)
           ],
         ),
@@ -64,10 +64,12 @@ required this.productImagePath, required this.isSelected,
             ),
             Transform.scale(
               scale:  isSelected ? 1.5 : 1,
-              child: Image.network(
-                      productImagePath,
-                      fit: BoxFit.cover,
-                    ),
+              child: productImagePath == ""
+              ? Image.asset("assets/pic-unavailable.png", fit: BoxFit.cover, width: 35,)
+              : Image.network(
+                    productImagePath,
+                    fit: BoxFit.cover,
+                  )
             )
           ]),
     );

@@ -15,7 +15,8 @@ class ProductFullInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProductProvider productProvider = Provider.of<ProductProvider>(context, listen: false);
+    ProductProvider productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
     double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
@@ -23,18 +24,9 @@ class ProductFullInfo extends StatelessWidget {
         SizedBox(
           width: screenWidth,
           height: 230,
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Image.network(
-              product.images![0],
-              fit: BoxFit.cover,
-              width: screenWidth * 0.42,
-            ),
-            Image.network(
-              product.images![0],
-              fit: BoxFit.cover,
-              width: screenWidth * 0.42,
-            ),
-          ]),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: getProductImageWiget(product.images, screenWidth)),
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10),
@@ -64,8 +56,8 @@ class ProductFullInfo extends StatelessWidget {
                   itemSize: 20,
                   itemBuilder: (context, index) =>
                       const Icon(Icons.star, color: Colors.white),
-                  onRatingUpdate: (val) async{
-                    await product.rankProduct(val.toInt());
+                  onRatingUpdate: (val) async {
+                    await productProvider.rankProduct(val.toInt());
                     productProvider.selectProduct(product);
                   })
             ],
@@ -83,14 +75,38 @@ class ProductFullInfo extends StatelessWidget {
           child: Row(
             children: [
               CapacitySquare(title: "Calories", data: product.calories),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               CapacitySquare(title: "Additives", data: product.additives),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               CapacitySquare(title: "Vitamins", data: product.vitamins),
             ],
           ),
         ),
       ]),
     );
+  }
+
+  getProductImageWiget(List<dynamic>? images, double screenWidth) {
+    List<Widget> imageWidgets = [];
+    for (var i = 0; i < 2; i++) {
+      if (images == null) {
+        imageWidgets.add(Image.asset(
+          "assets/pic-unavailable.png",
+          width: 100,
+        ));
+        break;
+      } else {
+        imageWidgets.add(Image.network(
+          product.images![0],
+          fit: BoxFit.cover,
+          width: screenWidth * 0.42,
+        ));
+      }
+    }
+    return imageWidgets;
   }
 }

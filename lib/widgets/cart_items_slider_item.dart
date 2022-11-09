@@ -7,9 +7,11 @@ import 'package:rigel_app/models/models.dart';
 import 'package:rigel_app/providers/cart_provider.dart';
 import 'package:rigel_app/providers/product_provider.dart';
 import 'package:rigel_app/themes/app_theme.dart';
+
 class CartItemsSliderItem extends StatelessWidget {
   final CartItemResponse cartItem;
-  const CartItemsSliderItem({Key? key, required this.cartItem}) : super(key: key);
+  const CartItemsSliderItem({Key? key, required this.cartItem})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,8 @@ class CartItemsSliderItem extends StatelessWidget {
       direction: DismissDirection.endToStart,
       background: const DismissibleBackground(),
       key: UniqueKey(),
-      onDismissed: (direction) => cartProvider.removeItem(cartProvider.cartItems.indexOf(cartItem)),
+      onDismissed: (direction) =>
+          cartProvider.removeItem(cartProvider.cartItems.indexOf(cartItem)),
       child: GestureDetector(
         onTap: () => cartProvider.selectCartItem(cartItem),
         child: Container(
@@ -26,23 +29,40 @@ class CartItemsSliderItem extends StatelessWidget {
           child: Row(
             children: [
               SizedBox(
-                width: 50,
-                child: Image.file(File(cartItem.product.images![0]))
-              ),
+                  width: 50,
+                  child: (cartItem.product.images == null)
+                      ? Image.asset(
+                          "assets/pic-unavailable.png",
+                          width: 20,
+                          color: Colors.white,
+                        )
+                      : Image.network(
+                          cartItem.product.images![0],
+                          fit: BoxFit.cover,
+                        )),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(cartItem.product.title, style: AppTheme.h2w,),
+                      Text(
+                        cartItem.product.title,
+                        style: AppTheme.h2w,
+                      ),
                       const SizedBox(height: 15),
-                      Text("\$${cartItem.product.price}", style: AppTheme.h3w,),
+                      Text(
+                        "\$${cartItem.product.price}",
+                        style: AppTheme.h3w,
+                      ),
                     ],
                   ),
                 ),
               ),
-              Text("x${cartItem.quantity}",style: AppTheme.h2w,)
+              Text(
+                "x${cartItem.quantity}",
+                style: AppTheme.h2w,
+              )
             ],
           ),
         ),
@@ -63,13 +83,17 @@ class DismissibleBackground extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Text("Eliminar", style: TextStyle(
-            fontFamily:  AppTheme.h2boldw.fontFamily,
-            fontSize: AppTheme.h2boldw.fontSize,
+          Text("Eliminar",
+              style: TextStyle(
+                fontFamily: AppTheme.h2boldw.fontFamily,
+                fontSize: AppTheme.h2boldw.fontSize,
+                color: Colors.red,
+                fontWeight: AppTheme.h2boldw.fontWeight,
+              )),
+          const Icon(
+            Icons.delete,
             color: Colors.red,
-            fontWeight: AppTheme.h2boldw.fontWeight,
-          )),
-          const Icon(Icons.delete, color: Colors.red,)
+          )
         ],
       ),
     );
