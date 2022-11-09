@@ -16,7 +16,7 @@ class DbHelper{
   Future<Database> _initDb() async{
     Directory documentsDir = await getApplicationDocumentsDirectory();
     String path = join(documentsDir.path,"rigelStore.db");
-    return await openDatabase(path,version: 1,onCreate: _onCreateDb);
+    return await openDatabase(path,version: 1);
   }
 
 
@@ -74,7 +74,7 @@ class DbHelper{
   }
 
   Future<void> _createDefaultCategories(Database database) async {
-    await database.insert('productCategories', ProductCategory(id:1,name: "Dried fruits").toMap());
-    await database.insert('productCategories', ProductCategory(id:2,name: "Nuts").toMap());
+    // await database.insert('productCategories', ProductCategory(id:"1",name: "Dried fruits").toMap());
+    // await database.insert('productCategories', ProductCategory(id:"2",name: "Nuts").toMap());
   }
 }

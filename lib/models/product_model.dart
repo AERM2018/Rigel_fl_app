@@ -77,11 +77,11 @@ class Product{
   //   return await db.insert('products', toMap());
   // }
 
-  Future<void> rankProduct(int inRanking) async{
-    Database db = await DbHelper.instance.db;
-    ranking = inRanking;
-    await db.update("products", toMap(), where: "id = ?", whereArgs: [id]);
-  }
+  // Future<void> rankProduct(int inRanking) async{
+  //   Database db = await DbHelper.instance.db;
+  //   ranking = inRanking;
+  //   await db.update("products", toMap(), where: "id = ?", whereArgs: [id]);
+  // }
 }
 
 // class ProductImage{
