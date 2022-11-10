@@ -1,4 +1,6 @@
 export 'package:rigel_app/screens/currencies_screen.dart';
+
+export 'package:rigel_app/screens/stores_screen.dart';
 export 'package:rigel_app/screens/countries_screen.dart';
 export 'package:rigel_app/screens/cart_screen.dart';
 
