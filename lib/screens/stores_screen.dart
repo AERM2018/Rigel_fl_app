@@ -25,7 +25,7 @@ class StoresScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Column(
               children: [
                 Row(
@@ -35,7 +35,7 @@ class StoresScreen extends StatelessWidget {
                       width: 12,
                     ),
                     CustomDropdown(
-                      onChange: storeProvider.filterStoresByCountry,
+                      onChange: storeProvider.filterStores,
                     ),
                   ],
                 ),
@@ -45,7 +45,7 @@ class StoresScreen extends StatelessWidget {
                     const SizedBox(
                       width: 12,
                     ),
-                    CustomSwitch( onChange: storeProvider.filterStoresByFavoriteValue,),
+                    CustomSwitch( onChange: storeProvider.filterStores,),
                   ],
                 )
               ],
@@ -59,9 +59,9 @@ class StoresScreen extends StatelessWidget {
               child: storeProvider.storesFiltered.isNotEmpty
                   ? ListView.builder(
                       itemBuilder: (context, index) {
-                        Store store = storeProvider.stores[index];
+                        Store store = storeProvider.storesFiltered[index];
                         return ListTile(
-                          title: Text("Name: ${store.name}"),
+                          title: Text(store.name),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -71,21 +71,34 @@ class StoresScreen extends StatelessWidget {
                           ),
                           trailing: FavoriteButton(
                             iconSize: 35,
-                            valueChanged: (value){
-                              print(value);
+                            valueChanged: (value) async{
+                              storeProvider.isFavorite = value;
+                              storeProvider.setAsFavorite(store.id!, value).then((_){
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(getSnackBarMsg(value));
+                                storeProvider.getStoresWithOppositeFavVal();
+                              });
                             },
-                            isFavorite: true,
+                            isFavorite: store.isFavorite,
                           ),
                           contentPadding: const EdgeInsets.all(12),
                         );
                       },
-                      itemCount: storeProvider.stores.length,
+                      itemCount: storeProvider.storesFiltered.length,
                     )
                   : Container(),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  SnackBar getSnackBarMsg(bool isFavorite){
+    String msg = (isFavorite) ? "Store set as favorite": "Store unset as favorite";
+    return SnackBar(
+      content: Text(msg),
+      duration: const Duration(milliseconds: 800),
     );
   }
 }
