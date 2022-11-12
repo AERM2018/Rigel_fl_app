@@ -49,7 +49,8 @@ class AppTheme{
       ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         backgroundColor: primaryColor
-      )
+      ),
+      appBarTheme: const AppBarTheme(iconTheme: IconThemeData(color: Colors.black), backgroundColor: Colors.white, elevation: 0)
     );
   }
 }

@@ -1,8 +1,9 @@
 export 'package:rigel_app/widgets/custom_switch.dart';
 
 export 'package:rigel_app/widgets/custom_dropdown.dart';
-export 'package:rigel_app/widgets/cart_items_slider.dart';
 
+export 'package:rigel_app/widgets/custom_drawer.dart';
+export 'package:rigel_app/widgets/cart_items_slider.dart';
 export 'package:rigel_app/widgets/cart_items_slider_item.dart';
 export 'package:rigel_app/widgets/cart_displayer.dart';
 export 'package:rigel_app/widgets/add_to_cart_card.dart';
